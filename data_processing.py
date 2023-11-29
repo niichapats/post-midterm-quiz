@@ -104,6 +104,21 @@ class Table:
             pivot_table.append([item, aggregate_val_list])
         return pivot_table
 
+    def insert_row(self, dict):
+        self.table.append(dict)
+        '''
+        This method inserts a dictionary, dict, into a Table object, effectively adding a row to the Table.
+        '''
+
+    def update_row(self, primary_attribute, primary_attribute_value, update_attribute, update_value):
+
+
+        '''
+        This method updates the current value of update_attribute to update_value
+        For example, my_table.update_row('Film', 'A Serious Man', 'Year', '2022') will change the 'Year' attribute for the 'Film'
+        'A Serious Man' from 2009 to 2022
+        '''
+
     def __str__(self):
         return self.table_name + ':' + str(self.table)
 
@@ -116,4 +131,21 @@ table_filter = movie_table.filter(lambda x: x['Genre'] == 'Drama')
 table2 = movie_table.aggregate(lambda x: min(x), 'Audience score %')
 print(f'minimum ‘Audience score %’ for ‘Drama’ movies : {table2}')
 
+
+table3 = movie_table.filter(lambda x: x['Genre'] == 'Fantasy').aggregate(lambda x: len(x), 'Film')
+print(f'the number of ‘Fantasy’ movie {table3}')
+
+dict = {}
+dict['Film'] = 'The Shape of Water'
+dict['Genre'] = 'Fantasy'
+dict['Lead Studio'] = 'Fox'
+dict['Audience score %'] = '72'
+dict['Profitability'] = '9.765'
+dict['Rotten Tomatoes %'] = '92'
+dict['Worldwide Gross'] = '195.3'
+dict['Year'] = '2017'
+
+movie_table.insert_row(dict)
+table4 = movie_table.filter(lambda x: x['Genre'] == 'Fantasy').aggregate(lambda x: len(x), 'Film')
+print(f'the number of ‘Fantasy’ movie after insert : {table4}')
 
