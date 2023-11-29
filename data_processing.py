@@ -3,6 +3,13 @@ import csv, os
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
+movies = []
+with open(os.path.join(__location__, 'movies.csv')) as f:
+    rows = csv.DictReader(f)
+    for r in rows:
+        movies.append(dict(r))
+
+
 class DB:
     def __init__(self):
         self.database = []
@@ -99,4 +106,14 @@ class Table:
 
     def __str__(self):
         return self.table_name + ':' + str(self.table)
+
+
+movie_table = Table('movie_table', movies)
+table1 = movie_table.filter(lambda x: x['Genre'] == 'Comedy').aggregate(lambda x: sum(x) / len(x), 'Worldwide Gross')
+print(f'average value of ‘Worldwide Gross’ for ‘Comedy’ movies : {table1:.2f}')
+
+table_filter = movie_table.filter(lambda x: x['Genre'] == 'Drama')
+table2 = movie_table.aggregate(lambda x: min(x), 'Audience score %')
+print(f'minimum ‘Audience score %’ for ‘Drama’ movies : {table2}')
+
 
