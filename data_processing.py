@@ -112,6 +112,8 @@ class Table:
 
     def update_row(self, primary_attribute, primary_attribute_value, update_attribute, update_value):
 
+    # def update(self, key, value, dict_name):
+    #     self.table.index(dict_name)[primary_attribute] = value
 
         '''
         This method updates the current value of update_attribute to update_value
